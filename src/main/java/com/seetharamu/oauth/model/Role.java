@@ -1,5 +1,6 @@
 package com.seetharamu.oauth.model;
 
+
 import lombok.Data;
 
 import javax.persistence.*;

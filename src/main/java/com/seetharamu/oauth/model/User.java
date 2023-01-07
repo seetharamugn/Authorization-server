@@ -1,9 +1,11 @@
 package com.seetharamu.oauth.model;
 
 import lombok.Data;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+
 @Entity
 @Table(name = "user")
 @Data
