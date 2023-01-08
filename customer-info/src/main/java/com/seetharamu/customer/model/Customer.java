@@ -1,16 +1,15 @@
 package com.seetharamu.customer.model;
 
-import javax.persistence.*;
-
 public class Customer {
 
-    int id;
-    String firstName;
-    String lastName;
-    String dlNumber;
-    String zipcode;
+    private int id;
+    private String firstName;
+    private String lastName;
+    private String dlNumber;
+    private String zipcode;
 
-    public Customer(String s, String s1, String s2, String s3) {
+    public Customer() {
+
     }
 
     public int getId() {
@@ -53,3 +52,4 @@ public class Customer {
         this.zipcode = zipcode;
     }
 }
+

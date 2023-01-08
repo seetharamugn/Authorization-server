@@ -17,34 +17,34 @@ import org.springframework.security.oauth2.provider.token.ResourceServerTokenSer
 @EnableResourceServer
 @Configuration
 public class ResourceServiceConfig extends ResourceServerConfigurerAdapter {
-	
-	/*@Value("${oauth.server.uri}")
-	private String authServerUri;*/
 
-	@Override
-	public void configure(HttpSecurity http) throws Exception {
+    @Value("${oauth.server.uri}")
+    private String authServerUri;
 
-	    http.antMatcher("/services/profile").authorizeRequests()
-        .antMatchers(HttpMethod.POST, "/services/profile").access("hasAuthority('ROLE_admin')")
-				.antMatchers("/*").permitAll()
-				.anyRequest().authenticated();
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
 
-	}
+        http.antMatcher("/services/profile").authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/services/profile").access("hasAuthority('ROLE_admin')")
+                .antMatchers("/*").permitAll()
+                .anyRequest().authenticated();
 
-	@Bean
-	public ResourceServerTokenServices tokenServices() {
-	    RemoteTokenServices tokenService = new RemoteTokenServices();
-	    tokenService.setCheckTokenEndpointUrl("http://localhost:8080/oauth/check_token");
-	    tokenService.setClientId("mobile");
-	    tokenService.setClientSecret("secret");
-	    return tokenService;
-	}
-	private String resourceIds= "inventory";
-	@Override
-	public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-		resources.resourceId(resourceIds).tokenServices(tokenServices());
-	}
+    }
+
+    @Bean
+    public ResourceServerTokenServices tokenServices() {
+        RemoteTokenServices tokenService = new RemoteTokenServices();
+        tokenService.setCheckTokenEndpointUrl(authServerUri + "/oauth/check_token");
+        tokenService.setClientId("mobile");
+        tokenService.setClientSecret("secret");
+        return tokenService;
+    }
+
+    @Override
+    public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+        String resourceIds = "inventory";
+        resources.resourceId(resourceIds).tokenServices(tokenServices());
+    }
 
 
-	
 }
